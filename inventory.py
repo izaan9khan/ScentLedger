@@ -56,9 +56,18 @@ def view_products():
             f"Stock: {products['stock_quantity']}"
         )
     
+def find_product(sku):
+
+    sku = sku.strip().upper()
+
+    for product in inventory:
+        if sku == product['sku']:
+            return product
+    return None
+
 
 amber_oud = create_product(
-    sku="amb001",
+    sku="AMB001",
     name="Amber Oud",
     brand="Ajmal",
     size_ml=100,
@@ -71,4 +80,6 @@ add_product(amber_oud)
 
 
 
-view_products()
+print(find_product("amb001"))
+print(find_product(" AMB001 "))
+print(find_product("XYZ999"))
