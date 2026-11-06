@@ -58,13 +58,56 @@ def view_products():
     
 def find_product(sku):
 
-    sku = sku.strip().upper()
+    sku = sku.upper()
 
     for product in inventory:
         if sku == product['sku']:
             return product
     return None
 
+def update_product(sku, field, new_value):
+
+    product = find_product(sku)
+
+    if product is None:
+        return False
+    if field not in product:
+        return False
+
+    allowed_fields = [
+            "name",
+            "brand",
+            "size_ml",
+            "cost_price",
+            "selling_price",
+            "stock_quantity",
+            "reorder_level"
+    ]
+    if field not in allowed_fields:
+        return False
+
+    product[field] = new_value
+    return True
+
+def delete_product(sku):
+
+    deletion = find_product(sku)
+
+    if deletion is None:
+        return False
+    inventory.remove(deletion)
+
+    return True
+
+    
+
+
+
+
+
+
+
+    
 
 amber_oud = create_product(
     sku="AMB001",
@@ -78,8 +121,7 @@ amber_oud = create_product(
 
 add_product(amber_oud)
 
+print(delete_product("AMB001"))
+view_products()
 
-
-print(find_product("amb001"))
-print(find_product(" AMB001 "))
-print(find_product("XYZ999"))
+print(delete_product("AMB001"))
